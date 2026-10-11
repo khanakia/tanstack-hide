@@ -19,24 +19,18 @@ tasks:
         cmd: rsvg-convert -w {{.ITEM}} -h {{.ITEM}} brand/icon.svg -o icons/icon-{{.ITEM}}.png
 
   zip:
-    desc: Package the extension into dist/tanstack-hide-vX.Y.Z.zip (Chrome Web Store upload, or unzip and Load unpacked)
-    vars:
-      VERSION:
-        sh: node -p "require('./manifest.json').version"
+    desc: Package the extension into dist/tanstack-hide.zip (Chrome Web Store upload, or unzip and Load unpacked)
     cmds:
       - mkdir -p dist
-      - rm -rf dist/tanstack-hide dist/tanstack-hide-v{{.VERSION}}.zip
+      - rm -rf dist/tanstack-hide dist/tanstack-hide.zip
       - mkdir dist/tanstack-hide
       - cp -R {{.EXT_FILES}} dist/tanstack-hide/
       # Zip the folder itself so unzipping gives one tanstack-hide/ folder to pick in Load unpacked.
-      - cd dist && zip -qr tanstack-hide-v{{.VERSION}}.zip tanstack-hide
+      - cd dist && zip -qr tanstack-hide.zip tanstack-hide
 
   crx:
-    desc: Sign dist/tanstack-hide-vX.Y.Z.crx with the key from gopass (personal/khanakia/tanstack-hide-crx-key)
+    desc: Sign dist/tanstack-hide.crx with the key from gopass (personal/khanakia/tanstack-hide-crx-key)
     deps: [zip]
-    vars:
-      VERSION:
-        sh: node -p "require('./manifest.json').version"
     cmds:
       - |
         set -e
@@ -47,16 +41,12 @@ tasks:
         rm -f dist/tanstack-hide.crx
         "$CFT" --headless=new --no-message-box --pack-extension="$PWD/dist/tanstack-hide" --pack-extension-key="$KEY" >/dev/null 2>&1 || true
         test -s dist/tanstack-hide.crx || { echo "packing failed"; exit 1; }
-        mv dist/tanstack-hide.crx dist/tanstack-hide-v{{.VERSION}}.crx
 
   release:
     desc: Build the zip + crx and their SHA256SUMS in dist/ (upload with gh release create)
     deps: [crx]
-    vars:
-      VERSION:
-        sh: node -p "require('./manifest.json').version"
     cmds:
-      - cd dist && shasum -a 256 tanstack-hide-v{{.VERSION}}.zip tanstack-hide-v{{.VERSION}}.crx > SHA256SUMS.txt && cat SHA256SUMS.txt
+      - cd dist && shasum -a 256 tanstack-hide.zip tanstack-hide.crx > SHA256SUMS.txt && cat SHA256SUMS.txt
 
   test:
     desc: End-to-end test of the real extension in headless Chrome for Testing (E2E_URL overrides the test page)

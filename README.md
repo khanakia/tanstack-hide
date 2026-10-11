@@ -20,6 +20,8 @@
   <br><em>Left: the TanStack Devtools button sitting on top of the app. Right: with the extension.</em>
 </p>
 
+<p align="center"><strong><a href="https://github.com/khanakia/tanstack-hide/releases/latest/download/tanstack-hide.zip">⬇ Download tanstack-hide.zip</a></strong> · <a href="#install">Install steps</a> · <a href="https://github.com/khanakia/tanstack-hide/releases">All releases</a></p>
+
 tanstack-hide is a Manifest V3 Chrome extension for developers building with TanStack Router, TanStack Query, TanStack Start or any app that mounts TanStack Devtools. It hides the floating devtools trigger button globally or per site (host and port), shows the state as a coloured dot on the toolbar icon, syncs your rules with Chrome sync, and makes no network requests. The devtools panel itself is untouched and still opens with its hotkey.
 
 ## Contents
@@ -82,17 +84,19 @@ If you only work on one app, the devtools' own setting is enough. If you jump be
 
 ## Install
 
-Every [release](https://github.com/khanakia/tanstack-hide/releases/latest) has three files:
+Direct downloads, always the latest version:
 
-| File | Use it for |
+| Download | Use it for |
 |---|---|
-| `tanstack-hide-vX.Y.Z.zip` | The normal install on any OS (steps below). |
-| `tanstack-hide-vX.Y.Z.crx` | Signed package for Linux drag-and-drop or managed installs by policy (see [The .crx file](#the-crx-file)). |
-| `SHA256SUMS.txt` | Checksums of both files. |
+| **[tanstack-hide.zip](https://github.com/khanakia/tanstack-hide/releases/latest/download/tanstack-hide.zip)** | The normal install, on Windows, macOS and Linux. Most people want this one (steps below). |
+| [tanstack-hide.crx](https://github.com/khanakia/tanstack-hide/releases/latest/download/tanstack-hide.crx) | Only for Linux drag-and-drop or installs managed by an administrator (see [The .crx file](#the-crx-file)). Chrome on Windows and macOS refuses it. |
+| [SHA256SUMS.txt](https://github.com/khanakia/tanstack-hide/releases/latest/download/SHA256SUMS.txt) | Checksums of both files, to check the download. |
+
+Older versions are on the [releases page](https://github.com/khanakia/tanstack-hide/releases).
 
 ### From the release zip (recommended)
 
-1. Download `tanstack-hide-vX.Y.Z.zip` from the [latest release](https://github.com/khanakia/tanstack-hide/releases/latest).
+1. Download [tanstack-hide.zip](https://github.com/khanakia/tanstack-hide/releases/latest/download/tanstack-hide.zip).
 2. Unzip it. You get a folder named `tanstack-hide`. Move it somewhere permanent (for example `~/Applications/tanstack-hide`), because Chrome loads the extension from that folder every time it starts; deleting the folder removes the extension.
 3. Open `chrome://extensions` and turn on **Developer mode** (top right).
 4. Click **Load unpacked** and pick the `tanstack-hide` folder (the one that contains `manifest.json`).
@@ -101,7 +105,7 @@ Every [release](https://github.com/khanakia/tanstack-hide/releases/latest) has t
 
 To update: download the new zip, replace the contents of the same folder with it, click the reload icon on the extension's card in `chrome://extensions`, then reload your tabs. Your settings are kept, because they live in Chrome's storage and not in the folder.
 
-Optional: check the download with `shasum -a 256 -c SHA256SUMS.txt` (macOS and Linux) or `Get-FileHash tanstack-hide-vX.Y.Z.zip` (Windows PowerShell).
+Optional: check the download with `shasum -a 256 -c SHA256SUMS.txt` (macOS and Linux) or `Get-FileHash tanstack-hide.zip` (Windows PowerShell).
 
 ### From source
 
@@ -112,7 +116,7 @@ To update: `git pull`, then click the reload icon on the extension's card in `ch
 
 ### The .crx file
 
-The `.crx` is the same extension, signed, with the fixed extension ID `bofgjoofhcigpodhkppgnbmhjdcniinj`. Chrome on Windows and macOS only installs `.crx` files that come from the Chrome Web Store, so on those systems use the zip instead. The `.crx` is useful for:
+The [tanstack-hide.crx](https://github.com/khanakia/tanstack-hide/releases/latest/download/tanstack-hide.crx) file is the same extension, signed, with the fixed extension ID `bofgjoofhcigpodhkppgnbmhjdcniinj`. Chrome on Windows and macOS only installs `.crx` files that come from the Chrome Web Store, so on those systems use the zip instead. The `.crx` is useful for:
 
 - **Linux:** open `chrome://extensions`, turn on **Developer mode**, and drag the `.crx` file onto the page.
 - **Managed browsers:** an administrator can self-host the `.crx` and install it with the `ExtensionInstallForcelist` policy, using the ID above.
@@ -301,9 +305,9 @@ Commands live in `Taskfile.yml` ([Task](https://taskfile.dev)):
 | `task screenshots` | Run the test and save the README screenshots to `docs/screenshots/`. |
 | `task brand` | Regenerate the brand kit in `brand/` from `brand/gen-brand.mjs` and `brand/brand.json`, then the extension icons. See [brand/README.md](brand/README.md). |
 | `task icons` | Rebuild `icons/*.png` from `brand/icon.svg` (needs `rsvg-convert`). |
-| `task zip` | Package the extension into `dist/tanstack-hide-vX.Y.Z.zip` (the version comes from `manifest.json`). |
-| `task crx` | Sign `dist/tanstack-hide-vX.Y.Z.crx`. Needs the maintainer's signing key, read from gopass (`personal/khanakia/tanstack-hide-crx-key`). |
-| `task release` | Build the zip and crx plus `dist/SHA256SUMS.txt`, ready to attach to a GitHub release. |
+| `task zip` | Package the extension into `dist/tanstack-hide.zip`. |
+| `task crx` | Sign `dist/tanstack-hide.crx`. Needs the maintainer's signing key, read from gopass (`personal/khanakia/tanstack-hide-crx-key`). |
+| `task release` | Build the zip and crx plus `dist/SHA256SUMS.txt`, ready to attach to a GitHub release. The file names carry no version, so the README's `releases/latest/download/` links always point at the newest release; the version is the release tag. |
 
 Branded Chrome no longer loads unpacked extensions from the command line, so the test needs a Chrome for Testing binary: `npx @puppeteer/browsers install chrome@stable`, or set `CFT` to its path.
 
