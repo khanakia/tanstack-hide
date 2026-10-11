@@ -10,7 +10,7 @@ tanstack-hide is open source (khanakia/tanstack-hide, MIT). It runs entirely in 
 - [CONTRIBUTING](https://github.com/khanakia/tanstack-hide/blob/main/CONTRIBUTING.md): development setup and tests
 
 ## Install
-- Download https://github.com/khanakia/tanstack-hide/releases/latest/download/tanstack-hide.zip, unzip it, open chrome://extensions, enable Developer mode, click "Load unpacked" and select the unzipped tanstack-hide folder (or clone the repo and select it). The .crx in each release installs by drag-and-drop on Linux only; Chrome on Windows and macOS accepts only Web Store .crx files.
+- Download https://github.com/khanakia/tanstack-hide/releases/latest/download/tanstack-hide.zip, unzip it, open chrome://extensions, enable Developer mode, click "Load unpacked" and select the unzipped tanstack-hide folder (or clone the repo and select it). There is no .crx download: Chrome on Windows and macOS only installs .crx files from the Chrome Web Store.
 
 ## Links
 - Repository: https://github.com/khanakia/tanstack-hide

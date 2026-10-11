@@ -22,7 +22,7 @@ You need [Task](https://taskfile.dev) for the commands below, and a Chrome for T
 | `task screenshots` | Run the test and refresh the README screenshots in `docs/screenshots/`. |
 | `task brand` | Regenerate the brand kit and extension icons from `brand/gen-brand.mjs`. |
 | `task zip` | Package the extension into `dist/tanstack-hide.zip`. |
-| `task release` | Build the zip, the signed crx (needs the maintainer key from gopass) and `dist/SHA256SUMS.txt`. |
+| `task release` | Build the zip and `dist/SHA256SUMS.txt` for a GitHub release. |
 
 ## Code layout
 

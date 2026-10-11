@@ -88,9 +88,8 @@ Direct downloads, always the latest version:
 
 | Download | Use it for |
 |---|---|
-| **[tanstack-hide.zip](https://github.com/khanakia/tanstack-hide/releases/latest/download/tanstack-hide.zip)** | The normal install, on Windows, macOS and Linux. Most people want this one (steps below). |
-| [tanstack-hide.crx](https://github.com/khanakia/tanstack-hide/releases/latest/download/tanstack-hide.crx) | Only for Linux drag-and-drop or installs managed by an administrator (see [The .crx file](#the-crx-file)). Chrome on Windows and macOS refuses it. |
-| [SHA256SUMS.txt](https://github.com/khanakia/tanstack-hide/releases/latest/download/SHA256SUMS.txt) | Checksums of both files, to check the download. |
+| **[tanstack-hide.zip](https://github.com/khanakia/tanstack-hide/releases/latest/download/tanstack-hide.zip)** | The extension, for Windows, macOS and Linux (steps below). |
+| [SHA256SUMS.txt](https://github.com/khanakia/tanstack-hide/releases/latest/download/SHA256SUMS.txt) | Checksum of the zip, to check the download. |
 
 Older versions are on the [releases page](https://github.com/khanakia/tanstack-hide/releases).
 
@@ -114,12 +113,9 @@ Optional: check the download with `shasum -a 256 -c SHA256SUMS.txt` (macOS and L
 
 To update: `git pull`, then click the reload icon on the extension's card in `chrome://extensions`, then reload your tabs.
 
-### The .crx file
+### Why there is no .crx file
 
-The [tanstack-hide.crx](https://github.com/khanakia/tanstack-hide/releases/latest/download/tanstack-hide.crx) file is the same extension, signed, with the fixed extension ID `bofgjoofhcigpodhkppgnbmhjdcniinj`. Chrome on Windows and macOS only installs `.crx` files that come from the Chrome Web Store, so on those systems use the zip instead. The `.crx` is useful for:
-
-- **Linux:** open `chrome://extensions`, turn on **Developer mode**, and drag the `.crx` file onto the page.
-- **Managed browsers:** an administrator can self-host the `.crx` and install it with the `ExtensionInstallForcelist` policy, using the ID above.
+Chrome on Windows and macOS only installs `.crx` files that come from the Chrome Web Store (see Google's [install guide](https://developer.chrome.com/docs/extensions/how-to/distribute/install-extensions)); any other `.crx` fails with `CRX_REQUIRED_PROOF_MISSING`, whether you open it or drag it in. So releases ship the zip, which works everywhere with **Load unpacked**. A one-click install will come with the Chrome Web Store listing.
 
 ### Other browsers
 
@@ -257,7 +253,7 @@ The extension makes no network requests, has no analytics and collects nothing. 
 
 ## Troubleshooting
 
-**Chrome says the extension can't be added, or `CRX_REQUIRED_PROOF_MISSING`.** You dropped the `.crx` file on Windows or macOS, where Chrome only accepts Web Store `.crx` files. Use the zip and **Load unpacked** instead.
+**Chrome says the extension can't be added, or `CRX_REQUIRED_PROOF_MISSING`.** You opened or dragged in a `.crx` file. Chrome only installs `.crx` files from the Chrome Web Store, so use the zip and **Load unpacked** instead.
 
 **Load unpacked says "Manifest file is missing or unreadable".** You picked the folder one level too high. Pick the `tanstack-hide` folder that contains `manifest.json`.
 
@@ -306,8 +302,7 @@ Commands live in `Taskfile.yml` ([Task](https://taskfile.dev)):
 | `task brand` | Regenerate the brand kit in `brand/` from `brand/gen-brand.mjs` and `brand/brand.json`, then the extension icons. See [brand/README.md](brand/README.md). |
 | `task icons` | Rebuild `icons/*.png` from `brand/icon.svg` (needs `rsvg-convert`). |
 | `task zip` | Package the extension into `dist/tanstack-hide.zip`. |
-| `task crx` | Sign `dist/tanstack-hide.crx`. Needs the maintainer's signing key, read from gopass (`personal/khanakia/tanstack-hide-crx-key`). |
-| `task release` | Build the zip and crx plus `dist/SHA256SUMS.txt`, ready to attach to a GitHub release. The file names carry no version, so the README's `releases/latest/download/` links always point at the newest release; the version is the release tag. |
+| `task release` | Build the zip plus `dist/SHA256SUMS.txt`, ready to attach to a GitHub release. The file names carry no version, so the README's `releases/latest/download/` links always point at the newest release; the version is the release tag. |
 
 Branded Chrome no longer loads unpacked extensions from the command line, so the test needs a Chrome for Testing binary: `npx @puppeteer/browsers install chrome@stable`, or set `CFT` to its path.
 

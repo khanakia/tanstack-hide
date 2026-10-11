@@ -1,7 +1,7 @@
 version: '3'
 
 vars:
-  # Everything the extension loads; the zip and crx contain exactly these.
+  # Everything the extension loads; the release zip contains exactly these.
   EXT_FILES: manifest.json background.js content.js shared.js popup.js hide.css popup.css popup.html icons
 
 tasks:
@@ -28,25 +28,11 @@ tasks:
       # Zip the folder itself so unzipping gives one tanstack-hide/ folder to pick in Load unpacked.
       - cd dist && zip -qr tanstack-hide.zip tanstack-hide
 
-  crx:
-    desc: Sign dist/tanstack-hide.crx with the key from gopass (personal/khanakia/tanstack-hide-crx-key)
+  release:
+    desc: Build the zip and its SHA256SUMS in dist/ (upload with gh release create)
     deps: [zip]
     cmds:
-      - |
-        set -e
-        CFT="${CFT:-$(find "$HOME/.cache/puppeteer/chrome" -path '*MacOS/Google Chrome for Testing' -type f 2>/dev/null | sort | tail -1)}"
-        test -x "$CFT" || { echo "Chrome for Testing not found; set CFT=/path/to/chrome"; exit 1; }
-        KEY="$(mktemp)"; trap 'rm -f "$KEY"' EXIT
-        gopass show -o personal/khanakia/tanstack-hide-crx-key | base64 -d > "$KEY"
-        rm -f dist/tanstack-hide.crx
-        "$CFT" --headless=new --no-message-box --pack-extension="$PWD/dist/tanstack-hide" --pack-extension-key="$KEY" >/dev/null 2>&1 || true
-        test -s dist/tanstack-hide.crx || { echo "packing failed"; exit 1; }
-
-  release:
-    desc: Build the zip + crx and their SHA256SUMS in dist/ (upload with gh release create)
-    deps: [crx]
-    cmds:
-      - cd dist && shasum -a 256 tanstack-hide.zip tanstack-hide.crx > SHA256SUMS.txt && cat SHA256SUMS.txt
+      - cd dist && shasum -a 256 tanstack-hide.zip > SHA256SUMS.txt && cat SHA256SUMS.txt
 
   test:
     desc: End-to-end test of the real extension in headless Chrome for Testing (E2E_URL overrides the test page)
