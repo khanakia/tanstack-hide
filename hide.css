@@ -1,0 +1,7 @@
+/* Hidden by default so the trigger never flashes in while settings load.
+   content.js adds `tsh-show` to <html> when the settings say this site
+   should keep its trigger. Only the button is hidden: the panel stays in
+   the DOM, so the devtools hotkey still opens it. */
+html:not(.tsh-show) [data-testid="tanstack_devtools"] > button[aria-label="Open TanStack Devtools"] {
+  display: none !important;
+}

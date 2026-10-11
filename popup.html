@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header>
+    <img src="icons/icon-32.png" width="18" height="18" alt="">
+    <div class="title">TanStack Hide</div>
+    <div id="host" class="muted mono"></div>
+  </header>
+
+  <div class="statusRow">
+    <div id="status" class="status"></div>
+    <span class="help" tabindex="0" role="button" aria-label="What the status dot means">?
+      <span class="tip" role="tooltip">
+        <b>Status</b> for the current tab. The toolbar icon shows the same coloured dot:
+        <span class="legend"><i style="--c:#16a34a"></i>Trigger hidden</span>
+        <span class="legend"><i style="--c:#f59e0b"></i>Trigger visible (a rule allows it)</span>
+        <span class="legend"><i style="--c:#a1a1aa"></i>Extension paused</span>
+        <span class="legend"><i class="none"></i>No dot: no TanStack Devtools on this page</span>
+      </span>
+    </span>
+  </div>
+
+  <section>
+    <div class="row">
+      <label for="enabled"><b>Enabled</b><span class="muted">Master switch for every site</span></label>
+      <span class="help" tabindex="0" role="button" aria-label="Help: Enabled">?
+        <span class="tip" role="tooltip">Turn off to pause the extension: the trigger shows on <b>every</b> site, ignoring the global setting and all site rules. Your rules are kept for when you turn it back on.</span>
+      </span>
+      <input type="checkbox" id="enabled" class="switch">
+    </div>
+    <div class="row">
+      <label for="globalHide"><b>Hide on all sites</b><span class="muted">Sites without their own rule</span></label>
+      <span class="help" tabindex="0" role="button" aria-label="Help: Hide on all sites">?
+        <span class="tip" role="tooltip">The default for any site you have not set a rule for. On: hide the trigger everywhere. Off: leave it visible, and hide it only on sites set to <b>Always hide</b>.</span>
+      </span>
+      <input type="checkbox" id="globalHide" class="switch">
+    </div>
+  </section>
+
+  <section id="siteSection">
+    <div class="label">This site
+      <span class="help" tabindex="0" role="button" aria-label="Help: This site">?
+        <span class="tip left up" role="tooltip">A rule for the site in this tab (matched by host and port, so <span class="mono">localhost:3000</span> and <span class="mono">localhost:5173</span> are separate).<br><b>Global</b>: follow "Hide on all sites".<br><b>Always hide</b> / <b>Always show</b>: override it here.<br>Shortcut: <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>H</kbd> flips this site.</span>
+      </span>
+    </div>
+    <div class="seg" id="siteMode" role="radiogroup">
+      <button data-mode="" role="radio">Global</button>
+      <button data-mode="hide" role="radio">Always hide</button>
+      <button data-mode="show" role="radio">Always show</button>
+    </div>
+  </section>
+
+  <section>
+    <div class="label">Site rules <span id="ruleCount" class="muted"></span>
+      <span class="help" tabindex="0" role="button" aria-label="Help: Site rules">?
+        <span class="tip left up" role="tooltip">Every site with its own rule. Click <b>×</b> to remove a rule, and that site goes back to following "Hide on all sites". Rules sync across your Chrome profile.</span>
+      </span>
+    </div>
+    <ul id="rules"></ul>
+  </section>
+
+  <footer class="muted">
+    <span>Panel still opens with its hotkey · <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>H</kbd> toggles this site</span>
+    <span class="help" tabindex="0" role="button" aria-label="Help: hotkeys">?
+      <span class="tip up" role="tooltip">Only the floating corner button is hidden. The devtools panel is untouched, so its own hotkey (shown in the devtools settings, <kbd>Ctrl</kbd>+<kbd>~</kbd> by default) still opens it.<br>Change this extension's shortcut at <span class="mono">chrome://extensions/shortcuts</span>.</span>
+    </span>
+  </footer>
+  <script src="shared.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

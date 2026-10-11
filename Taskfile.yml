@@ -1,0 +1,25 @@
+version: '3'
+
+tasks:
+  icons:
+    desc: Rasterize brand/icon.svg into the extension's icons/ (needs rsvg-convert)
+    cmds:
+      - mkdir -p icons
+      - for: ['16', '32', '48', '128']
+        cmd: rsvg-convert -w {{.ITEM}} -h {{.ITEM}} brand/icon.svg -o icons/icon-{{.ITEM}}.png
+
+  zip:
+    desc: Package the extension for the Chrome Web Store into dist/
+    cmds:
+      - mkdir -p dist
+      - rm -f dist/tanstack-hide.zip
+      - zip -r dist/tanstack-hide.zip manifest.json background.js content.js shared.js popup.js hide.css popup.css popup.html icons
+
+  test:
+    desc: End-to-end test of the real extension in headless Chrome for Testing (E2E_URL overrides the test page)
+    cmds:
+      - test -d node_modules || npm install --silent
+      - |
+        CFT="${CFT:-$(find "$HOME/.cache/puppeteer/chrome" -path '*MacOS/Google Chrome for Testing' -type f 2>/dev/null | sort | tail -1)}"
+        test -n "$CFT" || { echo "No Chrome for Testing found: run 'npx @puppeteer/browsers install chrome@stable' or set CFT"; exit 1; }
+        CFT="$CFT" node tests/e2e.mjs
