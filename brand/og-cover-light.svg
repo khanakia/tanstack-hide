@@ -1,0 +1,33 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="TanStack Hide">
+  <defs><linearGradient id="og-bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse"><stop stop-color="#FFF7ED"/><stop offset="1" stop-color="#FFEDD5"/></linearGradient></defs>
+  <rect width="1200" height="630" fill="url(#og-bg)"/>
+  <g transform="translate(96,182) scale(0.52)"><defs>
+    <linearGradient id="og-sky" x1="0" y1="40" x2="0" y2="330" gradientUnits="userSpaceOnUse"><stop stop-color="#2DD4BF"/><stop offset=".55" stop-color="#FDE68A"/><stop offset="1" stop-color="#FB923C"/></linearGradient>
+    <linearGradient id="og-sea" x1="0" y1="330" x2="0" y2="472" gradientUnits="userSpaceOnUse"><stop stop-color="#38BDF8"/><stop offset="1" stop-color="#0369A1"/></linearGradient>
+    <clipPath id="og-disc"><circle cx="256" cy="256" r="214"/></clipPath>
+  </defs>
+  <circle cx="256" cy="256" r="244" fill="#0B0B0F"/>
+  <g clip-path="url(#og-disc)">
+    <rect width="512" height="512" fill="url(#og-sky)"/>
+    <circle cx="330" cy="286" r="58" fill="#FDBA74" opacity=".9"/>
+    <rect y="330" width="512" height="182" fill="url(#og-sea)"/>
+    <path d="M40 368c40-14 80-14 120 0s80 14 120 0 80-14 120 0 80 14 120 0" stroke="#E0F2FE" stroke-width="10" stroke-linecap="round" opacity=".7"/>
+    <ellipse cx="236" cy="340" rx="150" ry="40" fill="#22C55E"/>
+    <ellipse cx="236" cy="352" rx="150" ry="28" fill="#FCD34D"/>
+    <path d="M232 344c-6-60 2-118 30-166" stroke="#92400E" stroke-width="18" stroke-linecap="round"/>
+    <g fill="#16A34A">
+      <path d="M262 176c-40-30-92-28-120 6 38-8 76 0 120-6z"/>
+      <path d="M262 176c28-40 78-50 112-24-38 0-72 8-112 24z"/>
+      <path d="M262 176c-14-44-50-70-90-64 30 18 54 38 90 64z"/>
+      <path d="M262 176c40 2 76 30 84 70-26-28-50-46-84-70z"/>
+      <path d="M262 176c-36 6-64 36-66 76 20-30 38-50 66-76z"/>
+    </g>
+  </g>
+  <circle cx="256" cy="256" r="214" stroke="#0B0B0F" stroke-width="6"/>
+  <path d="M96 96L416 416" stroke="#0B0B0F" stroke-width="64" stroke-linecap="round"/>
+  <path d="M96 96L416 416" stroke="#FFFFFF" stroke-width="30" stroke-linecap="round"/></g>
+  <text x="412" y="292" font-family="'Space Grotesk', 'Geist', ui-sans-serif, system-ui, sans-serif" font-size="96" font-weight="600" letter-spacing="-4" fill="#0B0B0F">tanstack-hide</text>
+  <rect x="416" y="324" width="86" height="8" rx="4" fill="#FB923C"/>
+  <text x="414" y="392" font-family="'Space Grotesk', 'Geist', ui-sans-serif, system-ui, sans-serif" font-size="38" font-weight="500" fill="#9A3412">Hide the TanStack Devtools corner button.</text>
+  <text x="414" y="446" font-family="'Space Grotesk', 'Geist', ui-sans-serif, system-ui, sans-serif" font-size="26" font-weight="400" fill="#57534E">Global or per site · the panel still opens with its hotkey · open source</text>
+</svg>

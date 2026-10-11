@@ -1,0 +1,16 @@
+# tanstack-hide
+
+> Chrome extension that hides the floating TanStack Devtools trigger button, globally or per site, with a status dot on the toolbar icon. The devtools panel still opens with its hotkey.
+
+tanstack-hide is open source (khanakia/tanstack-hide, MIT). It runs entirely in the browser and makes no network requests; settings are stored with Chrome sync in the user's own profile. It works with apps that mount the unified TanStack Devtools (`@tanstack/devtools`, `@tanstack/react-devtools`), as used by TanStack Router, TanStack Query and TanStack Start projects. It is not affiliated with TanStack.
+
+## Docs
+- [README](https://github.com/khanakia/tanstack-hide/blob/main/README.md): what it does, install, every popup control, use cases, troubleshooting, FAQ
+- [CHANGELOG](https://github.com/khanakia/tanstack-hide/blob/main/CHANGELOG.md): release history
+- [CONTRIBUTING](https://github.com/khanakia/tanstack-hide/blob/main/CONTRIBUTING.md): development setup and tests
+
+## Install
+- Clone the repo, open chrome://extensions, enable Developer mode, click "Load unpacked" and select the folder.
+
+## Links
+- Repository: https://github.com/khanakia/tanstack-hide

@@ -1,0 +1,28 @@
+<svg width="1000" height="200" viewBox="0 0 1000 200" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="TanStack Hide">
+  <g transform="translate(20,36) scale(0.25)"><defs>
+    <linearGradient id="l1-sky" x1="0" y1="40" x2="0" y2="330" gradientUnits="userSpaceOnUse"><stop stop-color="#2DD4BF"/><stop offset=".55" stop-color="#FDE68A"/><stop offset="1" stop-color="#FB923C"/></linearGradient>
+    <linearGradient id="l1-sea" x1="0" y1="330" x2="0" y2="472" gradientUnits="userSpaceOnUse"><stop stop-color="#38BDF8"/><stop offset="1" stop-color="#0369A1"/></linearGradient>
+    <clipPath id="l1-disc"><circle cx="256" cy="256" r="214"/></clipPath>
+  </defs>
+  <circle cx="256" cy="256" r="244" fill="#0B0B0F"/>
+  <g clip-path="url(#l1-disc)">
+    <rect width="512" height="512" fill="url(#l1-sky)"/>
+    <circle cx="330" cy="286" r="58" fill="#FDBA74" opacity=".9"/>
+    <rect y="330" width="512" height="182" fill="url(#l1-sea)"/>
+    <path d="M40 368c40-14 80-14 120 0s80 14 120 0 80-14 120 0 80 14 120 0" stroke="#E0F2FE" stroke-width="10" stroke-linecap="round" opacity=".7"/>
+    <ellipse cx="236" cy="340" rx="150" ry="40" fill="#22C55E"/>
+    <ellipse cx="236" cy="352" rx="150" ry="28" fill="#FCD34D"/>
+    <path d="M232 344c-6-60 2-118 30-166" stroke="#92400E" stroke-width="18" stroke-linecap="round"/>
+    <g fill="#16A34A">
+      <path d="M262 176c-40-30-92-28-120 6 38-8 76 0 120-6z"/>
+      <path d="M262 176c28-40 78-50 112-24-38 0-72 8-112 24z"/>
+      <path d="M262 176c-14-44-50-70-90-64 30 18 54 38 90 64z"/>
+      <path d="M262 176c40 2 76 30 84 70-26-28-50-46-84-70z"/>
+      <path d="M262 176c-36 6-64 36-66 76 20-30 38-50 66-76z"/>
+    </g>
+  </g>
+  <circle cx="256" cy="256" r="214" stroke="#0B0B0F" stroke-width="6"/>
+  <path d="M96 96L416 416" stroke="#0B0B0F" stroke-width="64" stroke-linecap="round"/>
+  <path d="M96 96L416 416" stroke="#FFFFFF" stroke-width="30" stroke-linecap="round"/></g>
+  <text x="176" y="132" font-family="'Space Grotesk', 'Geist', ui-sans-serif, system-ui, sans-serif" font-size="104" font-weight="600" letter-spacing="-4" fill="#0B0B0F">tanstack-hide</text>
+</svg>

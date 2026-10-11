@@ -1,6 +1,12 @@
 version: '3'
 
 tasks:
+  brand:
+    desc: Regenerate the brand kit (brand/) and the extension icons from brand/gen-brand.mjs
+    cmds:
+      - task -d brand all
+      - task: icons
+
   icons:
     desc: Rasterize brand/icon.svg into the extension's icons/ (needs rsvg-convert)
     cmds:
@@ -23,3 +29,9 @@ tasks:
         CFT="${CFT:-$(find "$HOME/.cache/puppeteer/chrome" -path '*MacOS/Google Chrome for Testing' -type f 2>/dev/null | sort | tail -1)}"
         test -n "$CFT" || { echo "No Chrome for Testing found: run 'npx @puppeteer/browsers install chrome@stable' or set CFT"; exit 1; }
         CFT="$CFT" node tests/e2e.mjs
+
+  screenshots:
+    desc: Regenerate the README screenshots in docs/screenshots from a real test run
+    cmds:
+      - E2E_OUT=docs/screenshots task test
+      - magick docs/screenshots/toolbar-icons.png -filter point -resize 300% docs/screenshots/toolbar-icons.png

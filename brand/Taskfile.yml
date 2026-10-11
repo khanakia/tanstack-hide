@@ -1,0 +1,37 @@
+version: '3'
+
+# Brand asset pipeline. Run from the repo root: task -t brand/Taskfile.yml all
+# (the root Taskfile's `brand` task does exactly that).
+
+tasks:
+  gen:
+    desc: Regenerate all SVG marks + design tokens from gen-brand.mjs
+    cmds:
+      - node gen-brand.mjs
+
+  raster:
+    desc: Rasterize favicons, app icons, OG covers, store tile + favicon.ico (needs rsvg-convert + magick)
+    cmds:
+      - mkdir -p png
+      - for: ['16', '32', '48']
+        cmd: rsvg-convert -w {{.ITEM}} -h {{.ITEM}} favicon.svg -o png/favicon-{{.ITEM}}.png
+      - rsvg-convert -w 180  -h 180  icon.svg               -o png/apple-touch-icon.png
+      - rsvg-convert -w 512  -h 512  icon.svg               -o png/tanstack-hide-icon-512.png
+      - rsvg-convert -w 1024 -h 1024 icon.svg               -o png/tanstack-hide-icon-1024.png
+      - rsvg-convert -w 1200 -h 630  og-cover.svg           -o png/og-cover.png
+      - rsvg-convert -w 1280 -h 640  og-cover.svg           -o png/og-social-1280.png   # GitHub social preview (2:1)
+      - rsvg-convert -w 1200 -h 630  og-cover-light.svg     -o png/og-cover-light.png
+      - rsvg-convert -w 440  -h 280  store-promo-small.svg  -o png/store-promo-small.png  # Chrome Web Store small promo tile
+      - rsvg-convert -w 1000 -h 200  tanstack-hide-lockup.svg -o png/tanstack-hide-lockup.png
+      - magick png/favicon-16.png png/favicon-32.png png/favicon-48.png favicon.ico
+
+  all:
+    desc: Regenerate everything (SVG + tokens + raster)
+    cmds:
+      - task: gen
+      - task: raster
+
+  clean:
+    desc: Remove generated raster output
+    cmds:
+      - rm -rf png favicon.ico

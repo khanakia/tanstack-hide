@@ -14,6 +14,8 @@ const OUT = process.env.E2E_OUT || fileURLToPath(new URL('../.e2e', import.meta.
 const HOST = new URL(URL_).host;
 // Time for a storage change to reach the page and the toolbar icon.
 const SETTLE_MS = 800;
+// Bottom-right corner of the 1000x600 page, where the trigger sits.
+const CORNER = { x: 640, y: 420, width: 360, height: 180 };
 mkdirSync(OUT, { recursive: true });
 
 let failed = 0;
@@ -28,6 +30,7 @@ const ctx = await chromium.launchPersistentContext('', {
   headless: true,
   ignoreHTTPSErrors: true,
   viewport: { width: 1000, height: 600 },
+  deviceScaleFactor: 2,
   args: ['--headless=new', `--disable-extensions-except=${EXT}`, `--load-extension=${EXT}`],
 });
 try {
@@ -51,6 +54,7 @@ try {
 
   check('default: trigger hidden', await visible(), false);
   check('default: icon status = hidden', await title(), T.hidden);
+  await page.screenshot({ path: `${OUT}/page-trigger-hidden.png`, clip: CORNER });
   // Upgrade from v1.1 leaves its "SHOW"/"HID" text badge on open tabs; the next
   // status update must wipe it so only the dot shows.
   await sw.evaluate((id) => chrome.action.setBadgeText({ tabId: id, text: 'SHOW' }), tab.id);
@@ -61,6 +65,7 @@ try {
   await setSettings({ enabled: true, globalHide: true, sites: { [HOST]: 'show' } });
   check('site=show: trigger visible', await visible(), true);
   check('site=show: icon status = visible', await title(), T.shown);
+  await page.screenshot({ path: `${OUT}/page-trigger-visible.png`, clip: CORNER });
 
   await setSettings({ enabled: true, globalHide: false, sites: {} });
   check('global off: trigger visible', await visible(), true);
@@ -83,17 +88,24 @@ try {
   const status = pop.locator('#status');
   await pop.waitForFunction(() => document.getElementById('status').textContent.length > 0);
   check('popup status', await status.textContent(), 'Trigger hidden on this page (global setting)');
-  await pop.screenshot({ path: `${OUT}/popup.png` });
+  // A real popup is only as tall as its content, so crop shots to the body.
+  const shootPopup = async (name) => {
+    const h = await pop.evaluate(() => Math.ceil(document.body.getBoundingClientRect().height));
+    await pop.screenshot({ path: `${OUT}/${name}`, clip: { x: 0, y: 0, width: 300, height: h } });
+  };
 
   await pop.getByRole('radio', { name: 'Always show' }).click();
   check('popup "Always show" shows trigger', await visible(), true);
   await pop.waitForTimeout(300);
   check('popup status after Always show', await status.textContent(), 'Trigger visible on this page (site rule)');
+  await shootPopup('popup-site-rule.png');
 
   await pop.locator('li button[title="Remove rule for other.test"]').click();
   await pop.getByRole('radio', { name: /Global/ }).click();
   check('popup Global hides trigger again', await visible(), false);
   check('popup rule list empty', await pop.locator('#rules').textContent(), 'No site rules — every site follows the global setting');
+  await pop.waitForTimeout(300);
+  await shootPopup('popup.png');
 
   for (const sel of ['.statusRow .help', '#siteSection .help', 'footer .help']) {
     await pop.mouse.move(150, 510);
@@ -105,7 +117,18 @@ try {
     const bodyH = await pop.evaluate(() => document.body.getBoundingClientRect().height);
     check(`help popover fits in popup: ${sel}`, !!box && box.y >= 0 && box.y + box.height <= bodyH, true);
   }
-  await pop.screenshot({ path: `${OUT}/popup-help.png` });
+  await pop.mouse.move(150, 510);
+  await pop.locator('.statusRow .help').hover();
+  await pop.waitForTimeout(150);
+  await shootPopup('popup-help.png');
+  await pop.mouse.move(150, 510);
+
+  await pop.locator('#enabled').click();
+  await pop.waitForTimeout(400);
+  check('popup Enabled off pauses', await visible(), true);
+  await shootPopup('popup-paused.png');
+  await pop.locator('#enabled').click();
+  check('popup Enabled on hides again', await visible(), false);
 
   // Toolbar icons as the background really draws them: plain + 3 status dots.
   const strip = await sw.evaluate(async () => {

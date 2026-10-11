@@ -1,0 +1,12 @@
+:root{
+  --tanstack-hide-ink:#0B0B0F; --tanstack-hide-paper:#FFFFFF; --tanstack-hide-accent:#FB923C;
+  --tanstack-hide-sky-a:#2DD4BF; --tanstack-hide-sky-b:#FDE68A; --tanstack-hide-sky-c:#FB923C;
+  --tanstack-hide-sea-a:#38BDF8; --tanstack-hide-sea-b:#0369A1;
+  --tanstack-hide-grass:#22C55E; --tanstack-hide-sand:#FCD34D;
+  --tanstack-hide-bg:#FFF7ED; --tanstack-hide-fg:#0B0B0F;
+  --tanstack-hide-font-display:'Space Grotesk', 'Geist', ui-sans-serif, system-ui, sans-serif;
+  --tanstack-hide-font-sans:'Inter', ui-sans-serif, system-ui, sans-serif;
+  --tanstack-hide-font-mono:'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --tanstack-hide-radius:50%;
+}
+[data-theme="dark"], .dark{ --tanstack-hide-bg:#0B0B0F; --tanstack-hide-fg:#FFFFFF; }

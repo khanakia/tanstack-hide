@@ -1,0 +1,33 @@
+{
+  "name": "tanstack-hide",
+  "ink": "#0B0B0F",
+  "paper": "#FFFFFF",
+  "accent": "#FB923C",
+  "scene": {
+    "sky": [
+      "#2DD4BF",
+      "#FDE68A",
+      "#FB923C"
+    ],
+    "sun": "#FDBA74",
+    "sea": [
+      "#38BDF8",
+      "#0369A1"
+    ],
+    "foam": "#E0F2FE",
+    "grass": "#22C55E",
+    "sand": "#FCD34D",
+    "trunk": "#92400E",
+    "leaf": "#16A34A"
+  },
+  "surfaces": {
+    "dark": [
+      "#0F172A",
+      "#0B0B0F"
+    ],
+    "light": [
+      "#FFF7ED",
+      "#FFEDD5"
+    ]
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "name": "tanstack-hide",
+  "tagline": "Hide the TanStack Devtools corner button.",
+  "description": "Chrome extension that hides the floating TanStack Devtools trigger button, globally or per site, with a status dot on the toolbar icon. The devtools panel still opens with its hotkey.",
+  "repo": "khanakia/tanstack-hide",
+  "homepage": "",
+  "language": "node",
+  "kind": "extension",
+  "license": "MIT",
+  "author": { "name": "Aman Bansal", "email": "khanakia@gmail.com", "github": "khanakia" },
+  "brand": {
+    "concept": "island-badge+slash",
+    "color": "sunset",
+    "tile": ["#2DD4BF", "#FB923C"],
+    "fg": "#FFFFFF",
+    "accent": "#FB923C",
+    "radius": 256
+  },
+  "fonts": { "display": "Space Grotesk", "sans": "Inter", "mono": "JetBrains Mono" },
+  "topics": ["tanstack", "tanstack-devtools", "tanstack-router", "tanstack-query", "tanstack-start", "chrome-extension", "browser-extension", "manifest-v3", "devtools", "developer-tools", "react", "javascript", "productivity"],
+  "positioning": {
+    "category": "TanStack Devtools trigger hider (Chrome extension)",
+    "audience": "Developers building apps with TanStack Router, Query or Start",
+    "wedge": "One switch hides the devtools corner button on every project and port, while the panel stays one hotkey away",
+    "alternatives": ["The devtools' own 'Hide trigger' setting (per app, in local storage)", "Custom CSS in each app", "Removing the devtools component"],
+    "differentiators": ["Set once for every project, port and profile", "Per-site exceptions", "Panel keeps working via its hotkey", "No flash of the button on load", "Status dot on the toolbar icon", "Synced with Chrome sync", "No network requests"]
+  },
+  "khanakia": { "addToApps": false }
+}

@@ -1,5 +1,13 @@
 {
   "name": "tanstack-hide",
+  "version": "1.3.0",
+  "description": "Chrome extension that hides the floating TanStack Devtools trigger button, globally or per site.",
+  "license": "MIT",
+  "author": "Aman Bansal <khanakia@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/khanakia/tanstack-hide.git"
+  },
   "private": true,
   "type": "module",
   "devDependencies": {
