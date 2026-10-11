@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "TanStack Devtools Trigger Hide",
-  "version": "1.3.0",
+  "version": "0.1.0",
   "description": "Hides the floating TanStack Devtools corner button, globally or per site. The panel still opens with its hotkey.",
   "permissions": [
     "storage",

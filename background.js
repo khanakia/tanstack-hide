@@ -60,7 +60,7 @@ async function setStatus(tabId, state) {
   latest.set(tabId, token);
   const dot = dotFor(state);
   try {
-    // v1.1 used a text badge ("HID"/"SHOW"); Chrome keeps per-tab badge text
+    // Early pre-release builds used a text badge ("HID"/"SHOW"); Chrome keeps per-tab badge text
     // across an extension reload, so wipe it or the old label covers the dot.
     await chrome.action.setBadgeText({ tabId, text: '' });
     if (dot) {

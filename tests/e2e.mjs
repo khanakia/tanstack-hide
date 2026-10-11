@@ -8,7 +8,8 @@ import { writeFileSync, mkdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
 
-const EXT = fileURLToPath(new URL('..', import.meta.url));
+// E2E_EXT tests another copy of the extension, e.g. the unzipped release.
+const EXT = process.env.E2E_EXT || fileURLToPath(new URL('..', import.meta.url));
 const URL_ = process.env.E2E_URL || 'https://designkit.localhost/kits/overlay';
 const OUT = process.env.E2E_OUT || fileURLToPath(new URL('../.e2e', import.meta.url));
 const HOST = new URL(URL_).host;
@@ -55,7 +56,7 @@ try {
   check('default: trigger hidden', await visible(), false);
   check('default: icon status = hidden', await title(), T.hidden);
   await page.screenshot({ path: `${OUT}/page-trigger-hidden.png`, clip: CORNER });
-  // Upgrade from v1.1 leaves its "SHOW"/"HID" text badge on open tabs; the next
+  // Upgrading from an early pre-release build leaves its "SHOW"/"HID" text badge on open tabs; the next
   // status update must wipe it so only the dot shows.
   await sw.evaluate((id) => chrome.action.setBadgeText({ tabId: id, text: 'SHOW' }), tab.id);
   await setSettings({ enabled: true, globalHide: true, sites: {} });

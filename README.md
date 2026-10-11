@@ -82,15 +82,44 @@ If you only work on one app, the devtools' own setting is enough. If you jump be
 
 ## Install
 
+Every [release](https://github.com/khanakia/tanstack-hide/releases/latest) has three files:
+
+| File | Use it for |
+|---|---|
+| `tanstack-hide-vX.Y.Z.zip` | The normal install on any OS (steps below). |
+| `tanstack-hide-vX.Y.Z.crx` | Signed package for Linux drag-and-drop or managed installs by policy (see [The .crx file](#the-crx-file)). |
+| `SHA256SUMS.txt` | Checksums of both files. |
+
+### From the release zip (recommended)
+
+1. Download `tanstack-hide-vX.Y.Z.zip` from the [latest release](https://github.com/khanakia/tanstack-hide/releases/latest).
+2. Unzip it. You get a folder named `tanstack-hide`. Move it somewhere permanent (for example `~/Applications/tanstack-hide`), because Chrome loads the extension from that folder every time it starts; deleting the folder removes the extension.
+3. Open `chrome://extensions` and turn on **Developer mode** (top right).
+4. Click **Load unpacked** and pick the `tanstack-hide` folder (the one that contains `manifest.json`).
+5. Pin the extension: click the puzzle icon in the toolbar, then the pin next to **TanStack Devtools Trigger Hide**, so its status dot is always in view.
+6. Reload any tab that was already open. Tabs opened before the install do not have the extension yet.
+
+To update: download the new zip, replace the contents of the same folder with it, click the reload icon on the extension's card in `chrome://extensions`, then reload your tabs. Your settings are kept, because they live in Chrome's storage and not in the folder.
+
+Optional: check the download with `shasum -a 256 -c SHA256SUMS.txt` (macOS and Linux) or `Get-FileHash tanstack-hide-vX.Y.Z.zip` (Windows PowerShell).
+
+### From source
+
 1. Clone the repo: `git clone https://github.com/khanakia/tanstack-hide.git`
-2. Open `chrome://extensions` and turn on **Developer mode** (top right).
-3. Click **Load unpacked** and pick the cloned folder.
-4. Pin the extension: click the puzzle icon in the toolbar, then the pin next to **TanStack Devtools Trigger Hide**, so its status dot is always in view.
-5. Reload any tab that was already open. Tabs opened before the install do not have the extension yet.
+2. Follow steps 3 to 6 above, picking the cloned folder in **Load unpacked**.
 
-To update later: `git pull`, then click the reload icon on the extension's card in `chrome://extensions`, then reload your tabs.
+To update: `git pull`, then click the reload icon on the extension's card in `chrome://extensions`, then reload your tabs.
 
-It should also work in other Chromium browsers that load unpacked extensions (Edge, Brave, Vivaldi, Opera, Arc); only Chrome is tested.
+### The .crx file
+
+The `.crx` is the same extension, signed, with the fixed extension ID `bofgjoofhcigpodhkppgnbmhjdcniinj`. Chrome on Windows and macOS only installs `.crx` files that come from the Chrome Web Store, so on those systems use the zip instead. The `.crx` is useful for:
+
+- **Linux:** open `chrome://extensions`, turn on **Developer mode**, and drag the `.crx` file onto the page.
+- **Managed browsers:** an administrator can self-host the `.crx` and install it with the `ExtensionInstallForcelist` policy, using the ID above.
+
+### Other browsers
+
+It should also work in other Chromium browsers that load unpacked extensions (Edge, Brave, Vivaldi, Opera, Arc): use the zip and that browser's extensions page (`edge://extensions`, `brave://extensions`, …). Only Chrome is tested.
 
 ## Quick start
 
@@ -224,6 +253,12 @@ The extension makes no network requests, has no analytics and collects nothing. 
 
 ## Troubleshooting
 
+**Chrome says the extension can't be added, or `CRX_REQUIRED_PROOF_MISSING`.** You dropped the `.crx` file on Windows or macOS, where Chrome only accepts Web Store `.crx` files. Use the zip and **Load unpacked** instead.
+
+**Load unpacked says "Manifest file is missing or unreadable".** You picked the folder one level too high. Pick the `tanstack-hide` folder that contains `manifest.json`.
+
+**The extension disappeared after I cleaned up my Downloads.** Chrome loads an unpacked extension from its folder, so the folder must stay. Unzip it again somewhere permanent and load it again; your settings come back with it.
+
 **The button still shows after installing or updating.** Reload the tab. Pages opened before the install or update do not have the new version.
 
 **The popup says "Reload the page to apply".** Same cause; reload the tab.
@@ -233,8 +268,6 @@ The extension makes no network requests, has no analytics and collects nothing. 
 **The button is hidden, but so is something I need.** Only that exact button is hidden. If something else disappeared, set the site to **Always show** to confirm the extension is the cause, then open an issue.
 
 **The shortcut does nothing.** Another extension or app may already use <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>H</kbd>. Set a different one at `chrome://extensions/shortcuts`.
-
-**I see an old "SHOW" or "HID" label on the icon.** Version 1.1 used text badges. The current version clears them the next time the tab updates; reload the tab if one stays.
 
 **It does not work on `chrome://` pages or the Chrome Web Store.** Chrome does not allow extensions there.
 
@@ -254,7 +287,7 @@ The extension makes no network requests, has no analytics and collects nothing. 
 
 **Does it hide the older React Query Devtools button too?** No. It targets the unified TanStack Devtools (`@tanstack/devtools`, used by `@tanstack/react-devtools` and the TanStack Start templates), whose trigger is a button labelled "Open TanStack Devtools". The standalone `@tanstack/react-query-devtools` floating logo renders different markup and is not matched yet.
 
-**Is it on the Chrome Web Store?** Not yet. Install it unpacked from this repo (see [Install](#install)); `task zip` builds the package for a store upload.
+**Is it on the Chrome Web Store?** Not yet. Install it from the release zip (see [Install](#install)); the same zip is what a store upload would use.
 
 **Is this an official TanStack project?** No. It is an independent extension, not affiliated with TanStack. The logo is original artwork, not the TanStack logo.
 
@@ -268,7 +301,9 @@ Commands live in `Taskfile.yml` ([Task](https://taskfile.dev)):
 | `task screenshots` | Run the test and save the README screenshots to `docs/screenshots/`. |
 | `task brand` | Regenerate the brand kit in `brand/` from `brand/gen-brand.mjs` and `brand/brand.json`, then the extension icons. See [brand/README.md](brand/README.md). |
 | `task icons` | Rebuild `icons/*.png` from `brand/icon.svg` (needs `rsvg-convert`). |
-| `task zip` | Package the extension into `dist/` for the Chrome Web Store. |
+| `task zip` | Package the extension into `dist/tanstack-hide-vX.Y.Z.zip` (the version comes from `manifest.json`). |
+| `task crx` | Sign `dist/tanstack-hide-vX.Y.Z.crx`. Needs the maintainer's signing key, read from gopass (`personal/khanakia/tanstack-hide-crx-key`). |
+| `task release` | Build the zip and crx plus `dist/SHA256SUMS.txt`, ready to attach to a GitHub release. |
 
 Branded Chrome no longer loads unpacked extensions from the command line, so the test needs a Chrome for Testing binary: `npx @puppeteer/browsers install chrome@stable`, or set `CFT` to its path.
 
